@@ -3,213 +3,376 @@
 <head>
   <meta charset="utf-8" />
   <title>Happy Birthday Arvind — WWE Champion</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    :root{
-      --bg:#000;
-      --accent:#c8102e; /* WWE red */
-      --gold:#d4af37;
-      --white:#fff;
-      --muted:#ccc;
-    }
-    html,body{height:100%;margin:0;background:var(--bg);color:white;font-family:'Anton', Impact, Arial, sans-serif;overflow-x:hidden;}
-    body{
-      background-image: url('https://www.svgrepo.com/show/332196/wrestling-ring.svg');
-      background-repeat: repeat;
-      background-size: 120px;
-      background-position: center center;
-      background-attachment: fixed;
-    }
-    .container{max-width:1100px;margin:24px auto;padding:16px;text-align:center;}
-
-    h1{
-      font-size:3rem;color:var(--accent);
-      text-shadow:0 4px 12px rgba(0,0,0,0.7),0 0 12px var(--gold);
+    :root {
+      --bg: #000;
+      --accent: #c8102e; /* WWE red */
+      --gold: #d4af37;
+      --muted: #ddd;
+      --ring-dark: #111;
+      --ring-metal: #555;
     }
 
-    h2{
-      font-size:1.5rem;margin:6px 0;color:var(--muted);font-weight:700;
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: var(--bg);
+      color: white;
+      font-family: 'Arial Black', Impact, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 20px auto;
+      padding: 16px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: var(--accent);
+      text-shadow: 0 4px 8px rgba(0,0,0,0.7), 0 0 8px rgba(212,175,55,0.6);
+      animation: shake 0.6s infinite;
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      margin: 6px 0;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    @keyframes shake {
+      0%{transform:translate(0,0)}
+      25%{transform:translate(2px,-2px) rotate(-1deg)}
+      50%{transform:translate(-2px,2px) rotate(1deg)}
+      75%{transform:translate(1px,-1px) rotate(-1deg)}
+      100%{transform:translate(0,0)}
     }
 
     /* Countdown */
-    #countdown{font-size:1.8rem;color:var(--gold);margin:14px 0;font-weight:900;letter-spacing:1px;}
+    #countdown {
+      font-size: 1.8rem;
+      color: var(--gold);
+      margin: 14px 0;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
 
     /* Ring */
-    .ring{
-      position:relative;margin:20px auto;
-      width:360px;height:220px;
-      border-radius:12px;
-      background: radial-gradient(circle at center, #111 0%, #000 80%);
-      box-shadow: 0 0 20px rgba(255,255,255,0.2), inset 0 0 12px rgba(255,255,255,0.1);
+    .ring {
+      margin: 20px auto;
+      width: 360px;
+      height: 200px;
+      position: relative;
+      border-radius: 8px;
+      background: linear-gradient(180deg, #111, #000);
+      box-shadow: 0 0 20px rgba(255,255,255,0.1);
     }
-    .rope{
-      position:absolute;width:100%;height:6px;background:linear-gradient(to right,var(--accent),var(--gold));
-      box-shadow:0 2px 6px rgba(0,0,0,0.8);
+    .rope {
+      position: absolute;
+      width: 100%;
+      height: 10px;
+      background: var(--accent);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.8);
     }
-    .top{top:20px}
-    .mid{top:104px}
-    .bottom{bottom:20px}
+    .top { top: 20px; }
+    .mid { top: 90px; }
+    .bottom { bottom: 20px; }
 
-    /* Spotlight effect */
-    .spotlight{
-      position:absolute;top:0;left:50%;transform:translateX(-50%);
-      width:400px;height:400px;
-      background: radial-gradient(circle,rgba(255,255,255,0.15) 0%,transparent 70%);
-      pointer-events:none;z-index:1;
-      animation:lightMove 4s infinite alternate;
+    /* Belt + slideshow */
+    .beltWrap {
+      margin: 18px auto;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      justify-content: center;
+      flex-wrap: wrap;
     }
-    @keyframes lightMove{
-      0%{transform:translateX(-60%) rotate(0deg);}
-      100%{transform:translateX(-40%) rotate(10deg);}
+    .beltImg {
+      width: 300px;
+      border: 4px solid var(--ring-metal);
+      border-radius: 10px;
+      padding: 6px;
+      background: linear-gradient(90deg,#222,#111);
+    }
+    .beltName {
+      display: inline-block;
+      background: var(--gold);
+      color: #111;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: 900;
+      margin-top: 8px;
     }
 
-    /* Belt + Slideshow */
-    .beltWrap{margin:20px auto;display:flex;gap:24px;align-items:flex-start;justify-content:center;flex-wrap:wrap;}
-    .beltImg{width:300px;border:4px solid #222;border-radius:8px;background:linear-gradient(90deg,#222,#111);padding:6px;}
-    .beltName{display:inline-block;background:var(--gold);color:#111;padding:6px 12px;border-radius:6px;font-weight:900;margin-top:8px;}
-
-    .slideshow{width:300px;height:300px;overflow:hidden;border-radius:12px;border:5px solid #222;position:relative;background:#111;}
-    .slideshow img{position:absolute;width:100%;height:100%;object-fit:cover;left:0;top:0;opacity:0;transition:opacity 1s;}
-    .slideshow img.active{opacity:1;}
-
-    /* Music controls top */
-    .musicBar{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:999;background:rgba(0,0,0,0.7);padding:10px 20px;border-radius:12px;display:flex;gap:10px;align-items:center;}
-
-    .musicBar button{background:var(--gold);color:#111;border:none;padding:8px 12px;border-radius:6px;font-weight:800;cursor:pointer;}
+    .slideshow {
+      width: 300px;
+      height: 300px;
+      margin: 14px auto;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 4px solid var(--ring-metal);
+      position: relative;
+      background: #111;
+    }
+    .slideshow img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      transition: opacity 1s;
+    }
+    .slideshow img.active { opacity: 1; }
 
     /* Wishes area */
-    .wishesWrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:18px 0;}
-    .wishCard{background:linear-gradient(180deg,#111,#0b0b0b);border:3px solid rgba(200,200,200,0.06);padding:12px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.7);text-align:left;}
-    .starName{font-weight:900;color:var(--accent);font-size:1rem;margin-bottom:4px;}
-    .wishText{font-size:0.95rem;color:var(--muted);line-height:1.2;}
+    .wishesWrap {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+      gap: 14px;
+      margin: 18px 0;
+    }
+    .wishCard {
+      background: linear-gradient(180deg,#111,#0b0b0b);
+      border: 3px solid rgba(200,200,200,0.06);
+      padding: 12px;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.7);
+      text-align: left;
+    }
+    .starName { font-weight: 900; color: var(--accent); font-size: 0.95rem; }
+    .wishText { margin-top: 8px; font-size: 0.95rem; color: var(--muted); line-height: 1.2; }
 
-    /* Ticker */
-    .ticker{position:fixed;left:0;bottom:0;width:100%;background:var(--accent);color:var(--gold);font-weight:900;padding:10px 0;z-index:50;overflow:hidden;}
-    .ticker p{display:inline-block;padding-left:100%;animation:scroll 18s linear infinite;}
-    @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+    /* Add wish form */
+    .addWish {
+      margin: 16px auto;
+      display: flex;
+      gap: 8px;
+      max-width: 700px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .addWish input, .addWish textarea {
+      padding: 8px;
+      border-radius: 6px;
+      border: 2px solid #222;
+      background: #0e0e0e;
+      color: #fff;
+      min-width: 200px;
+    }
+    .addWish button {
+      background: var(--gold);
+      color: #111;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-weight: 900;
+      cursor: pointer;
+    }
 
-    /* Fireworks Canvas */
-    canvas#fireworksCanvas{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:9999;}
+    /* Music control */
+    .controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      margin-top: 12px;
+    }
+    .controls button {
+      background: var(--accent);
+      color: var(--gold);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    /* Fireworks canvas */
+    canvas.confetti {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
 
     /* Responsive */
     @media(max-width:520px){
       h1{font-size:2rem;}
       .ring{width:260px;height:160px;}
       .slideshow{width:260px;height:260px;}
-      .beltImg{width:240px;}
     }
 
+    /* WWE background icons */
+    body::before {
+      content: "";
+      position: fixed;
+      top:0; left:0;
+      width: 100%; height:100%;
+      background-image: url('https://i.imgur.com/1vS49rB.png'); /* example WWE background pattern */
+      background-repeat: repeat;
+      opacity: 0.05;
+      pointer-events: none;
+      z-index: 0;
+    }
   </style>
 </head>
 <body>
-
-  <!-- Music Bar -->
-  <div class="musicBar">
-    <audio id="themeAudio" loop>
-      <source src="theme.mp3" type="audio/mpeg">
-      Your browser doesn't support audio.
-    </audio>
-    <button id="playBtn">▶️ Play Entrance Music</button>
-    <button id="pauseBtn" style="display:none">⏸️ Pause Music</button>
-  </div>
-
   <div class="container">
-    <h1>🎉 Happy Birthday Arvind! 🎉</h1>
-    <h2>The Undisputed WWE Champion — Get Ready to RUMBLE</h2>
+    <h1>Happy Birthday Arvind!</h1>
 
     <!-- Countdown -->
     <div id="countdown">Loading countdown...</div>
 
     <!-- Ring -->
-    <div class="ring">
+    <div class="ring" aria-hidden="true">
       <div class="rope top"></div>
       <div class="rope mid"></div>
       <div class="rope bottom"></div>
-      <div class="spotlight"></div>
     </div>
 
-    <!-- Belt + Slideshow -->
+    <!-- Belt + Photos -->
     <div class="beltWrap">
       <div>
         <h2>🏆 Birthday Championship Belt</h2>
         <div class="beltImg">
-          <img src="belt.png" alt="Belt placeholder">
+          <img src="belt.png" alt="Belt placeholder" style="width:100%;height:auto;border-radius:6px">
         </div>
         <div class="beltName">ARVIND</div>
       </div>
-
       <div>
         <h2>📸 The Titantron (Photos)</h2>
         <div class="slideshow" id="slideshow">
-          <img src="arvind1.jpg" class="active">
-          <img src="arvind2.jpg">
-          <img src="arvind3.jpg">
-          <img src="arvind4.jpg">
-          <img src="arvind5.jpg">
+          <img src="arvind1.jpg" class="active" alt="Arvind photo 1">
+          <img src="arvind2.jpg" alt="Arvind photo 2">
+          <img src="arvind3.jpg" alt="Arvind photo 3">
+          <!-- You can add more photos here -->
         </div>
       </div>
     </div>
 
-    <!-- Wishes -->
+    <p style="color:#ccc;font-weight:700;margin:6px 0">Wishing you a Slam-tastic Birthday — your friends are in your corner! 🏅</p>
+
+    <!-- Music controls -->
+    <div class="controls">
+      <audio id="themeAudio" loop>
+        <source src="theme.mp3" type="audio/mpeg">
+        Your browser doesn't support audio.
+      </audio>
+      <button id="playBtn">▶️ Play Entrance Music</button>
+      <button id="pauseBtn" style="display:none">⏸️ Pause Music</button>
+    </div>
+
+    <!-- Superstar Wishes -->
     <h2 style="margin-top:22px">🎙️ Superstar Wishes</h2>
     <div class="wishesWrap" id="wishesWrap">
-      <div class="wishCard"><div class="starName">The Rock</div><div class="wishText">Finally... Arvind! The People have spoken — have yourself a smackdown of a birthday. Lay the smackethdown and enjoy!</div></div>
-      <div class="wishCard"><div class="starName">John Cena</div><div class="wishText">Arvind, champ — hustle hard today, celebrate harder. You can't see me, but you can hear the cheers!</div></div>
-      <div class="wishCard"><div class="starName">Stone Cold</div><div class="wishText">Give me a hell yeah! Arvind — crack open a cold one and enjoy your day, son!</div></div>
-      <div class="wishCard"><div class="starName">The Undertaker</div><div class="wishText">Rest... and then party. A dark and glorious birthday to you, Arvind. The ring remembers.</div></div>
-      <div class="wishCard"><div class="starName">Roman Reigns</div><div class="wishText">Happy birthday, family. Wishing you strength, pride and a year of victories. Drive forward.</div></div>
-      <div class="wishCard"><div class="starName">Hulk Hogan</div><div class="wishText">Whatcha gonna do, brother? Celebrate this epic day to the fullest, Arvind!</div></div>
-      <div class="wishCard"><div class="starName">Triple H</div><div class="wishText">Time to dominate the birthday ring, Arvind. Make it legendary!</div></div>
-      <div class="wishCard"><div class="starName">Shawn Michaels</div><div class="wishText">Heartbreak Kid says — your birthday is going to be sweet, Arvind!</div></div>
-      <div class="wishCard"><div class="starName">Seth Rollins</div><div class="wishText">Arvind, the Architect of celebrations. Build memories tonight!</div></div>
-      <div class="wishCard"><div class="starName">Becky Lynch</div><div class="wishText">The Man approves! Celebrate like a true champion!</div></div>
+      <div class="wishCard">
+        <div class="starName">The Rock</div>
+        <div class="wishText">"Finally... Arvind! The People have spoken — enjoy your smackdown birthday!"</div>
+      </div>
+      <div class="wishCard">
+        <div class="starName">John Cena</div>
+        <div class="wishText">"Arvind, champ — hustle hard today, celebrate harder!"</div>
+      </div>
+      <div class="wishCard">
+        <div class="starName">Stone Cold</div>
+        <div class="wishText">"Give me a hell yeah! Arvind — crack open a cold one and enjoy your day!"</div>
+      </div>
+      <div class="wishCard">
+        <div class="starName">Roman Reigns</div>
+        <div class="wishText">"Happy birthday, family. Wishing you strength and a year of victories!"</div>
+      </div>
+      <div class="wishCard">
+        <div class="starName">The Undertaker</div>
+        <div class="wishText">"Rest... and then party. A dark and glorious birthday to you, Arvind."</div>
+      </div>
+      <!-- Add more superstar wishes here -->
+    </div>
+
+    <!-- Add a friend's wish -->
+    <div style="margin-top:8px">
+      <h2>✍️ Add a Friend's Wish</h2>
+      <div class="addWish">
+        <input id="friendName" placeholder="Your name (friend)" />
+        <textarea id="friendWish" rows="2" placeholder="Your wish for Arvind"></textarea>
+        <button id="addWishBtn">Add Wish</button>
+      </div>
+      <small style="color:#999">(These will appear as quote cards above)</small>
     </div>
   </div>
 
-  <!-- ticker -->
-  <div class="ticker">
-    <p>🎤 Happy Birthday Arvind! | 🎉 You are the Champion! | 💪 Time to Celebrate WWE Style! | 🔥 Let’s Get Ready to Rumble! </p>
-  </div>
-
   <!-- Fireworks Canvas -->
-  <canvas id="fireworksCanvas"></canvas>
+  <canvas id="fireworksCanvas" class="confetti"></canvas>
 
   <script>
-    // Countdown
-    const birthdayTarget = new Date('2025-09-20T00:00:00');
+    /* ---------- Countdown ---------- */
+    const birthdayTarget = new Date('2025-09-20T00:00:00'); // next birthday
     const countdownEl = document.getElementById('countdown');
-    function computeAge(birth){ const bd=new Date(birth); let age=birthdayTarget.getFullYear()-bd.getFullYear(); const m=birthdayTarget.getMonth()-bd.getMonth(); if(m<0||(m===0&&birthdayTarget.getDate()<bd.getDate())) age--; return age;}
-    const ageAtBirthday = computeAge('1987-09-20');
-    function updateCountdown(){
-      const dist = birthdayTarget.getTime() - Date.now();
-      if(dist<=0){ countdownEl.innerHTML=`🎉 The Champion Arrives! Happy ${ageAtBirthday}<sup>th</sup> Birthday, Arvind! 🎉`; triggerCelebration(); return;}
-      const days=Math.floor(dist/(1000*60*60*24));
-      const hours=Math.floor((dist%(1000*60*60*24))/(1000*60*60));
-      const minutes=Math.floor((dist%(1000*60*60))/(1000*60));
-      const seconds=Math.floor((dist%(1000*60))/1000);
-      countdownEl.innerHTML=`${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
+
+    function updateCountdown() {
+      const now = new Date();
+      const dist = birthdayTarget - now;
+      if(dist <= 0){
+        countdownEl.innerHTML = `🎉 The Champion Arrives! Happy Birthday Arvind! 🎉`;
+        triggerCelebration();
+        return;
+      }
+      const days = Math.floor(dist / (1000*60*60*24));
+      const hours = Math.floor((dist % (1000*60*60*24)) / (1000*60*60));
+      const minutes = Math.floor((dist % (1000*60*60)) / (1000*60));
+      const seconds = Math.floor((dist % (1000*60)) / 1000);
+      countdownEl.innerHTML = `${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
     }
-    updateCountdown(); setInterval(updateCountdown,1000);
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
 
-    // Slideshow
-    const slides=document.querySelectorAll('.slideshow img'); let si=0;
-    setInterval(()=>{ slides[si].classList.remove('active'); si=(si+1)%slides.length; slides[si].classList.add('active'); },3000);
+    /* ---------- Slideshow ---------- */
+    const slides = document.querySelectorAll('.slideshow img');
+    let si=0;
+    setInterval(()=>{
+      slides[si].classList.remove('active');
+      si=(si+1)%slides.length;
+      slides[si].classList.add('active');
+    }, 3000);
 
-    // Music
-    const audio=document.getElementById('themeAudio');
-    const playBtn=document.getElementById('playBtn');
-    const pauseBtn=document.getElementById('pauseBtn');
-    playBtn.addEventListener('click',()=>{ audio.play().catch(()=>{}); playBtn.style.display='none'; pauseBtn.style.display='inline-block';});
-    pauseBtn.addEventListener('click',()=>{ audio.pause(); pauseBtn.style.display='none'; playBtn.style.display='inline-block';});
-    audio.addEventListener('play',()=>{ playBtn.style.display='none'; pauseBtn.style.display='inline-block'; });
-    audio.addEventListener('pause',()=>{ pauseBtn.style.display='none'; playBtn.style.display='inline-block'; });
+    /* ---------- Music Controls ---------- */
+    const audio = document.getElementById('themeAudio');
+    const playBtn = document.getElementById('playBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
 
-    // Fireworks
-    const canvas=document.getElementById('fireworksCanvas');
-    const ctx=canvas.getContext('2d');
-    function resizeCanvas(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight;}
-    window.addEventListener('resize',resizeCanvas); resizeCanvas();
+    playBtn.addEventListener('click', ()=>{ audio.play(); playBtn.style.display='none'; pauseBtn.style.display='inline-block'; });
+    pauseBtn.addEventListener('click', ()=>{ audio.pause(); pauseBtn.style.display='none'; playBtn.style.display='inline-block'; });
+
+    /* ---------- Wishes Add ---------- */
+    const wishesWrap = document.getElementById('wishesWrap');
+    const addBtn = document.getElementById('addWishBtn');
+    addBtn.addEventListener('click', ()=>{
+      const name = document.getElementById('friendName').value.trim() || 'Friend';
+      const text = document.getElementById('friendWish').value.trim();
+      if(!text) return alert('Please write a wish!');
+      const card = document.createElement('div'); card.className='wishCard';
+      card.innerHTML = `<div class="starName">${escapeHtml(name)}</div><div class="wishText">${escapeHtml(text)}</div>`;
+      wishesWrap.prepend(card);
+      document.getElementById('friendName').value=''; document.getElementById('friendWish').value='';
+    });
+    function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+    /* ---------- Fireworks ---------- */
+    const canvas = document.getElementById('fireworksCanvas');
+    const ctx = canvas.getContext('2d');
+    function resizeCanvas(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
     const particles=[];
     function spawnFirework(x,y){
       const hue=Math.floor(Math.random()*360);
@@ -220,26 +383,30 @@
     function animateParticles(){
       ctx.clearRect(0,0,canvas.width,canvas.height);
       for(let i=particles.length-1;i>=0;i--){
-        const p=particles[i]; p.vy+=p.gravity; p.x+=p.vx; p.y+=p.vy; p.life--;
-        ctx.fillStyle=p.color; ctx.beginPath(); ctx.ellipse(p.x,p.y,p.size,p.size*0.8,0,0,Math.PI*2); ctx.fill();
-        if(p.life<=0||p.y>canvas.height+50) particles.splice(i,1);
+        const p=particles[i];
+        p.vy+=p.gravity; p.x+=p.vx; p.y+=p.vy; p.life--;
+        ctx.fillStyle=p.color;
+        ctx.beginPath();
+        ctx.ellipse(p.x,p.y,p.size,p.size*0.8,0,0,Math.PI*2);
+        ctx.fill();
+        if(p.life<=0 || p.y>canvas.height+50) particles.splice(i,1);
       }
       requestAnimationFrame(animateParticles);
     }
     animateParticles();
-    setInterval(()=>{ if(Math.random()<0.06){ spawnFirework(Math.random()*canvas.width, canvas.height*0.8); } },700);
+    setInterval(()=>{ if(Math.random()<0.06){ spawnFirework(Math.random()*canvas.width, Math.random()*canvas.height*0.5); } },700);
 
     let celebrated=false;
     function triggerCelebration(){
-      if(celebrated) return; celebrated=true;
-      for(let i=0;i<6;i++){ setTimeout(()=>spawnFirework(canvas.width*(0.15+Math.random()*0.7), canvas.height*0.8 + Math.random()*50), i*300);}
+      if(celebrated) return;
+      celebrated=true;
+      for(let i=0;i<6;i++){ setTimeout(()=>spawnFirework(canvas.width*(0.15+Math.random()*0.7), canvas.height*0.2+Math.random()*80), i*300); }
       audio.play().catch(()=>{});
-      document.querySelector('.ticker p').textContent = `🎉 HAPPY BIRTHDAY ARVIND! THE CHAMPION HAS ARRIVED! 🎉   `;
-      let cnt=0; const fwInt=setInterval(()=>{ spawnFirework(Math.random()*canvas.width, canvas.height*0.8); cnt++; if(cnt>16){clearInterval(fwInt;} },250);
+      let cnt=0; const fwInt=setInterval(()=>{
+        spawnFirework(Math.random()*canvas.width, Math.random()*canvas.height*0.35);
+        cnt++; if(cnt>16){ clearInterval(fwInt); }
+      },250);
     }
-    if(Date.now()>=birthdayTarget.getTime()) triggerCelebration();
-
   </script>
-
 </body>
 </html>
