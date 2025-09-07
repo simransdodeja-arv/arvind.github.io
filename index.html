@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Happy Birthday Arvind — WWE Champion</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root{
+      --bg:#000;
+      --accent:#c8102e; /* WWE red */
+      --gold:#d4af37;
+      --muted:#ddd;
+    }
+    html,body{height:100%;margin:0;background:var(--bg);color:white;font-family:Impact, 'Arial Black', sans-serif;}
+    .container{max-width:1100px;margin:24px auto;padding:16px;text-align:center;}
+    h1{font-size:3rem;color:var(--accent);text-shadow:0 4px 8px rgba(0,0,0,0.7), 0 0 8px rgba(212,175,55,0.6);animation:shake 0.6s infinite;}
+    h2{font-size:1.6rem;margin:6px 0;color:var(--muted);font-weight:700}
+    @keyframes shake{
+      0%{transform:translate(0,0)}
+      25%{transform:translate(2px,-2px) rotate(-1deg)}
+      50%{transform:translate(-2px,2px) rotate(1deg)}
+      75%{transform:translate(1px,-1px) rotate(-1deg)}
+      100%{transform:translate(0,0)}
+    }
+
+    /* Countdown */
+    #countdown{font-size:1.8rem;color:var(--gold);margin:14px 0;font-weight:900;letter-spacing:1px}
+
+    /* Ring */
+    .ring{margin:20px auto;border:6px solid white;width:360px;height:220px;position:relative;border-radius:6px;background:linear-gradient(180deg,#080808,#111);}
+    .rope{position:absolute;width:100%;height:8px;background:var(--accent);box-shadow:0 2px 6px rgba(0,0,0,0.8)}
+    .top{top:26px}
+    .mid{top:104px}
+    .bottom{bottom:26px}
+
+    /* Belt */
+    .beltWrap{margin:18px auto;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+    .beltImg{width:300px;border:6px solid #222;border-radius:8px;background:linear-gradient(90deg,#222,#111);padding:6px}
+    .beltName{display:inline-block;background:var(--gold);color:#111;padding:6px 12px;border-radius:6px;font-weight:900;margin-top:8px}
+
+    /* slideshow */
+    .slideshow{width:300px;height:300px;margin:14px auto;overflow:hidden;border-radius:12px;border:5px solid #222;position:relative;background:#111}
+    .slideshow img{position:absolute;width:100%;height:100%;object-fit:cover;left:0;top:0;opacity:0;transition:opacity 1s}
+    .slideshow img.active{opacity:1}
+
+    /* Ticker */
+    .ticker{position:fixed;left:0;bottom:0;width:100%;background:var(--accent);color:var(--gold);font-weight:900;padding:10px 0;z-index:50;overflow:hidden}
+    .ticker p{display:inline-block;padding-left:100%;animation:scroll 18s linear infinite}
+    @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+
+    /* Wishes area */
+    .wishesWrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:18px 0}
+    .wishCard{background:linear-gradient(180deg,#111,#0b0b0b);border:3px solid rgba(200,200,200,0.06);padding:12px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.7);text-align:left}
+    .wishHeader{display:flex;gap:10px;align-items:center}
+    .avatar{width:56px;height:56px;border-radius:6px;object-fit:cover;border:3px solid var(--accent);flex-shrink:0}
+    .starName{font-weight:900;color:var(--accent);font-size:0.95rem}
+    .wishText{margin-top:8px;font-size:0.95rem;color:var(--muted);line-height:1.2}
+
+    /* Add wish form */
+    .addWish{margin:16px auto;display:flex;gap:8px;max-width:700px;align-items:center;justify-content:center;flex-wrap:wrap}
+    .addWish input,.addWish textarea{padding:8px;border-radius:6px;border:2px solid #222;background:#0e0e0e;color:#fff;min-width:200px}
+    .addWish button{background:var(--gold);color:#111;border:none;padding:10px 14px;border-radius:6px;font-weight:900;cursor:pointer}
+
+    /* Confetti canvas sits above fireworks */
+    canvas.confetti{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:9999}
+
+    /* small controls row */
+    .controls{display:flex;gap:8px;align-items:center;justify-content:center;margin-top:12px}
+    .controls button{background:var(--accent);color:var(--gold);border:none;padding:8px 12px;border-radius:6px;font-weight:800;cursor:pointer}
+
+    /* responsive */
+    @media(max-width:520px){
+      h1{font-size:2rem}
+      .ring{width:260px;height:160px}
+      .slideshow{width:260px;height:260px}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎂 Happy Birthday, Arvind! 🎂</h1>
+    <h2>The Undisputed WWE Champion — Get Ready to RUMBLE</h2>
+
+    <!-- countdown -->
+    <div id="countdown">Loading countdown...</div>
+
+    <!-- ring -->
+    <div class="ring" aria-hidden="true">
+      <div class="rope top"></div>
+      <div class="rope mid"></div>
+      <div class="rope bottom"></div>
+    </div>
+
+    <!-- belt + slideshow -->
+    <div class="beltWrap">
+      <div>
+        <h2 style="margin:8px 0">🏆 Birthday Championship Belt</h2>
+        <!-- Replace belt.png with your uploaded belt image -->
+        <div class="beltImg">
+          <img src="belt.png" alt="Belt placeholder" style="width:100%;height:auto;display:block;border-radius:6px">
+        </div>
+        <div class="beltName">ARVIND</div>
+      </div>
+
+      <div>
+        <h2 style="margin:8px 0">📸 The Titantron (Photos)</h2>
+        <div class="slideshow" id="slideshow">
+          <img src="arvind1.jpg" class="active" alt="Arvind photo 1">
+          <img src="arvind2.jpg" alt="Arvind photo 2">
+          <img src="arvind3.jpg" alt="Arvind photo 3">
+        </div>
+      </div>
+    </div>
+
+    <p style="color:#ccc;font-weight:700;margin:6px 0">Wishing you a Slam-tastic Birthday — your friends are in your corner! 🏅</p>
+
+    <!-- controls for music -->
+    <div class="controls">
+      <audio id="themeAudio" loop>
+        <!-- Upload theme.mp3 to your repo or change filename -->
+        <source src="theme.mp3" type="audio/mpeg">
+        Your browser doesn't support audio.
+      </audio>
+      <button id="playBtn">▶️ Play Entrance Music</button>
+      <button id="pauseBtn" style="display:none">⏸️ Pause Music</button>
+    </div>
+
+    <!-- Wishes area - quote cards -->
+    <h2 style="margin-top:22px">🎙️ Superstar Wishes</h2>
+    <div class="wishesWrap" id="wishesWrap">
+      <!-- Dummy WWE superstar wishes -->
+      <div class="wishCard">
+        <div class="wishHeader">
+          <img class="avatar" src="https://via.placeholder.com/56/111/fff?text=R" alt="The Rock">
+          <div>
+            <div class="starName">The Rock</div>
+            <div style="font-size:0.85rem;color:#aaa">Legend</div>
+          </div>
+        </div>
+        <div class="wishText">"Finally... Arvind! The People have spoken — have yourself a smackdown of a birthday. Lay the smackethdown and enjoy!"</div>
+      </div>
+
+      <div class="wishCard">
+        <div class="wishHeader">
+          <img class="avatar" src="https://via.placeholder.com/56/111/fff?text=C" alt="John Cena">
+          <div>
+            <div class="starName">John Cena</div>
+            <div style="font-size:0.85rem;color:#aaa">Hustle. Loyalty. Respect.</div>
+          </div>
+        </div>
+        <div class="wishText">"Arvind, champ — hustle hard today, celebrate harder. You can't see me, but you can hear the cheers!"</div>
+      </div>
+
+      <div class="wishCard">
+        <div class="wishHeader">
+          <img class="avatar" src="https://via.placeholder.com/56/111/fff?text=U" alt="The Undertaker">
+          <div>
+            <div class="starName">The Undertaker</div>
+            <div style="font-size:0.85rem;color:#aaa">The Phenom</div>
+          </div>
+        </div>
+        <div class="wishText">"Rest... and then party. A dark and glorious birthday to you, Arvind. The ring remembers."</div>
+      </div>
+
+      <div class="wishCard">
+        <div class="wishHeader">
+          <img class="avatar" src="https://via.placeholder.com/56/111/fff?text=S" alt="Stone Cold">
+          <div>
+            <div class="starName">Stone Cold</div>
+            <div style="font-size:0.85rem;color:#aaa">Texas Rattlesnake</div>
+          </div>
+        </div>
+        <div class="wishText">"Give me a hell yeah! Arvind — crack open a cold one and enjoy your day, son!"</div>
+      </div>
+
+      <div class="wishCard">
+        <div class="wishHeader">
+          <img class="avatar" src="https://via.placeholder.com/56/111/fff?text=R" alt="Roman Reigns">
+          <div>
+            <div class="starName">Roman Reigns</div>
+            <div style="font-size:0.85rem;color:#aaa">Head of the Table</div>
+          </div>
+        </div>
+        <div class="wishText">"Happy birthday, family. Wishing you strength, pride and a year of victories. Drive forward."</div>
+      </div>
+    </div>
+
+    <!-- add wish form -->
+    <div style="margin-top:8px">
+      <h2 style="margin:8px 0">✍️ Add a Friend's Wish</h2>
+      <div class="addWish">
+        <input id="friendName" placeholder="Your name (friend)" />
+        <textarea id="friendWish" rows="2" placeholder="Your wish for Arvind"></textarea>
+        <button id="addWishBtn">Add Wish</button>
+      </div>
+      <small style="color:#999">(These will appear as quote cards above)</small>
+    </div>
+
+  </div>
+
+  <!-- ticker -->
+  <div class="ticker">
+    <p>🎤 Happy Birthday Arvind! | 🎉 You are the Champion! | 💪 Time to Celebrate WWE Style! | 🔥 Let’s Get Ready to Rumble! </p>
+  </div>
+
+  <!-- fireworks + confetti canvas -->
+  <canvas id="fireworksCanvas" class="confetti"></canvas>
+
+  <script>
+    /* ---------- Config ---------- */
+    // Set birthday target — local time midnight on 20 Sep 2025
+    const birthdayTarget = new Date('2025-09-20T00:00:00');
+
+    /* ---------- Countdown ---------- */
+    const countdownEl = document.getElementById('countdown');
+    const targetTime = birthdayTarget.getTime();
+
+    function computeBirthdayAge(birth) {
+      // birth: "1987-09-20"
+      const bd = new Date(birth);
+      let age = birthdayTarget.getFullYear() - bd.getFullYear();
+      const m = birthdayTarget.getMonth() - bd.getMonth();
+      if (m < 0 || (m === 0 && birthdayTarget.getDate() < bd.getDate())) age--;
+      return age;
+    }
+
+    // compute age at this birthday (born 1987-09-20)
+    const ageAtBirthday = computeBirthdayAge('1987-09-20');
+
+    function updateCountdown() {
+      const now = Date.now();
+      const dist = targetTime - now;
+      if (dist <= 0) {
+        countdownEl.innerHTML = `🎉 The Champion Arrives! Happy ${ageAtBirthday}<sup>th</sup> Birthday, Arvind! 🎉`;
+        triggerCelebration();
+        return;
+      }
+      const days = Math.floor(dist / (1000*60*60*24));
+      const hours = Math.floor((dist % (1000*60*60*24)) / (1000*60*60));
+      const minutes = Math.floor((dist % (1000*60*60)) / (1000*60));
+      const seconds = Math.floor((dist % (1000*60)) / 1000);
+      countdownEl.innerHTML = `${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
+    }
+    updateCountdown();
+    const countdownInterval = setInterval(updateCountdown, 1000);
+
+    /* ---------- Slideshow ---------- */
+    const slides = document.querySelectorAll('.slideshow img');
+    let si = 0;
+    setInterval(()=>{
+      slides[si].classList.remove('active');
+      si = (si + 1) % slides.length;
+      slides[si].classList.add('active');
+    }, 3000);
+
+    /* ---------- Music controls ---------- */
+    const audio = document.getElementById('themeAudio');
+    const playBtn = document.getElementById('playBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+
+    playBtn.addEventListener('click', ()=>{
+      audio.play().catch(()=>{ /* autoplay blocked */ });
+      playBtn.style.display='none'; pauseBtn.style.display='inline-block';
+    });
+    pauseBtn.addEventListener('click', ()=>{
+      audio.pause();
+      pauseBtn.style.display='none'; playBtn.style.display='inline-block';
+    });
+
+    /* ---------- Wishes add (client-side) ---------- */
+    const wishesWrap = document.getElementById('wishesWrap');
+    const addBtn = document.getElementById('addWishBtn');
+    addBtn.addEventListener('click', ()=>{
+      const name = document.getElementById('friendName').value.trim() || 'Friend';
+      const text = document.getElementById('friendWish').value.trim();
+      if(!text) return alert('Please write a wish!');
+      const card = document.createElement('div'); card.className='wishCard';
+      card.innerHTML = `
+        <div class="wishHeader">
+          <img class="avatar" src="https://via.placeholder.com/56/111/fff?text=${encodeURIComponent(name.charAt(0) || 'F')}" alt="${name}">
+          <div>
+            <div class="starName">${escapeHtml(name)}</div>
+            <div style="font-size:0.85rem;color:#aaa">Friend</div>
+          </div>
+        </div>
+        <div class="wishText">${escapeHtml(text)}</div>
+      `;
+      wishesWrap.prepend(card);
+      document.getElementById('friendName').value=''; document.getElementById('friendWish').value='';
+    });
+
+    function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
+
+    /* ---------- Fireworks + Confetti ---------- */
+    const canvas = document.getElementById('fireworksCanvas');
+    const ctx = canvas.getContext('2d');
+    function resizeCanvas(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // simple particle system for fireworks/confetti
+    const particles = [];
+    function spawnFirework(x,y){
+      const hue = Math.floor(Math.random()*360);
+      for(let i=0;i<80;i++){
+        particles.push({
+          x,y,
+          vx:(Math.random()-0.5)*6,
+          vy:(Math.random()-0.5)*6,
+          life:Math.random()*60+40,
+          color:`hsl(${hue} ${100}% ${50}%)`,
+          size:Math.random()*3+1,
+          gravity:0.04
+        });
+      }
+    }
+    function spawnConfetti(){
+      for(let i=0;i<60;i++){
+        particles.push({
+          x:Math.random()*canvas.width,
+          y:-10,
+          vx:(Math.random()-0.5)*2,
+          vy:Math.random()*3+1,
+          life:Math.random()*200+100,
+          color:`hsl(${Math.random()*360} ${80}% ${50}%)`,
+          size:Math.random()*6+4,
+          gravity:0.05
+        });
+      }
+    }
+
+    function animateParticles(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      for(let i=particles.length-1;i>=0;i--){
+        const p = particles[i];
+        p.vy += p.gravity;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life--;
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.ellipse(p.x,p.y,p.size,p.size*0.8,0,0,Math.PI*2);
+        ctx.fill();
+        if(p.life<=0 || p.y>canvas.height+50) particles.splice(i,1);
+      }
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // small random fireworks before/after
+    setInterval(()=>{
+      if(Math.random() < 0.06){
+        spawnFirework(Math.random()*canvas.width, Math.random()*canvas.height*0.5);
+      }
+    }, 700);
+
+    // celebration trigger when countdown hits zero
+    let celebrated=false;
+    function triggerCelebration(){
+      if(celebrated) return;
+      celebrated=true;
+      // big burst
+      for(let i=0;i<6;i++){
+        setTimeout(()=> spawnFirework(canvas.width*(0.15 + Math.random()*0.7), canvas.height*0.2 + Math.random()*80), i*300);
+      }
+      // confetti raining
+      spawnConfetti();
+      // play audio if paused
+      audio.play().catch(()=>{});
+      // add a big ticker update:
+      document.querySelector('.ticker p').textContent = `🎉 HAPPY BIRTHDAY ARVIND! THE CHAMPION HAS ARRIVED! 🎉   `;
+      // optional: fireworks loop for some seconds
+      let cnt = 0;
+      const fwInt = setInterval(()=>{
+        spawnFirework(Math.random()*canvas.width, Math.random()*canvas.height*0.35);
+        cnt++;
+        if(cnt>16){ clearInterval(fwInt); }
+      },250);
+    }
+
+    // If the page is loaded after the target time, ensure celebration happens
+    if(Date.now() >= targetTime) triggerCelebration();
+
+    /* ---------- small UX touches (prevent negative) ---------- */
+    // ensure the audio control shows correct status:
+    audio.addEventListener('play', ()=>{ playBtn.style.display='none'; pauseBtn.style.display='inline-block'; });
+    audio.addEventListener('pause', ()=>{ pauseBtn.style.display='none'; playBtn.style.display='inline-block'; });
+
+  </script>
+</body>
+</html>
