@@ -14,7 +14,7 @@
   html, body{
     margin:0;
     height:100%;
-    background:#000 url('https://i.ibb.co/3cZ7YcK/wwe-bg.png') repeat; /* WWE-themed subtle icons */
+    background:#000 url('https://i.ibb.co/3cZ7YcK/wwe-bg.png') repeat;
     font-family:'Arial Black', 'Impact', sans-serif;
     color:white;
     overflow-x:hidden;
@@ -134,10 +134,10 @@
   /* Fireworks canvas */
   canvas#fireworksCanvas{ position:fixed; left:0; top:0; width:100%; height:100%; pointer-events:none; z-index:999; }
 
-  @media(max-width:520px){
-    h1{ font-size:2rem; }
-    .slideshow{ width:260px; height:260px; }
-  }
+  /* Add Friend Message Section */
+  .add-message{ margin-top:30px; text-align:center; }
+  .add-message input, .add-message textarea{ padding:10px; margin:5px; border-radius:6px; border:none; width:200px; }
+  .add-message button{ background:var(--gold); color:#111; border:none; padding:10px 16px; border-radius:6px; font-weight:800; cursor:pointer; }
 </style>
 </head>
 <body>
@@ -190,6 +190,14 @@
     <div class="wishCard"><div class="starName">Roman Reigns</div><div class="wishText">"Happy birthday, family. Wishing you strength and victories!"</div></div>
     <div class="wishCard"><div class="starName">Becky Lynch</div><div class="wishText">"Arvind, stay fearless and strong — enjoy your day!"</div></div>
     <div class="wishCard"><div class="starName">The Undertaker</div><div class="wishText">"Rest... and then party. A dark and glorious birthday to you!"</div></div>
+  </div>
+
+  <!-- Add Friend Message Section -->
+  <div class="add-message">
+    <h2>💌 Add Your Birthday Wish!</h2>
+    <input type="text" id="friendName" placeholder="Your Name">
+    <textarea id="friendWish" placeholder="Your Message"></textarea><br>
+    <button id="addWishBtn">Send Wish</button>
   </div>
 </div>
 
@@ -297,6 +305,21 @@ function screenShake(){
 document.getElementById('slamBtn').addEventListener('click',screenShake);
 document.getElementById('punchBtn').addEventListener('click',screenShake);
 
+/* ---------- Add Friend Message ---------- */
+const addWishBtn = document.getElementById('addWishBtn');
+addWishBtn.addEventListener('click',()=>{
+  const name = document.getElementById('friendName').value.trim();
+  const message = document.getElementById('friendWish').value.trim();
+  if(name && message){
+    const wishesWrap = document.getElementById('wishesWrap');
+    const card = document.createElement('div');
+    card.className='wishCard';
+    card.innerHTML = `<div class="starName">${name}</div><div class="wishText">"${message}"</div>`;
+    wishesWrap.appendChild(card);
+    document.getElementById('friendName').value='';
+    document.getElementById('friendWish').value='';
+  }
+});
 </script>
 </body>
 </html>
