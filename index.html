@@ -1,353 +1,377 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Arvind — WWE Champion</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="UTF-8">
+<title>Happy Birthday Arvind — WWE Style</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0a;
+  --accent:#d4af37;
+  --secondary:#c8102e;
+  --muted:#ccc;
+}
+body{
+  margin:0;
+  font-family:'Anton', Impact, Arial Black, sans-serif;
+  background-color:var(--bg);
+  color:white;
+  overflow-x:hidden;
+}
+.container{
+  max-width:1100px;
+  margin:0 auto;
+  padding:20px;
+  text-align:center;
+}
+h1{
+  font-size:3rem;
+  color:var(--accent);
+  text-shadow:0 4px 10px rgba(0,0,0,0.7);
+}
+h2{
+  font-size:1.6rem;
+  color:var(--muted);
+  font-weight:700;
+  margin:6px 0;
+}
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+/* Music bar */
+.audioBar{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  background:#111;
+  padding:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  z-index:999;
+  box-shadow:0 2px 6px rgba(0,0,0,0.8);
+}
+.audioBar button{
+  padding:8px 12px;
+  background:var(--accent);
+  color:#111;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:800;
+}
 
-  <style>
-    :root{
-      --bg:#000;
-      --accent:#c8102e;
-      --gold:#d4af37;
-      --muted:#ddd;
-    }
+/* WWE Ring */
+.ring{
+  position:relative;
+  width:400px;
+  height:200px;
+  margin:40px auto;
+  background:#111;
+  border:4px solid #333;
+  border-radius:8px;
+  box-shadow:0 0 20px rgba(0,0,0,0.7);
+}
+.ring .rope{
+  position:absolute;
+  height:6px;
+  width:100%;
+  background:var(--secondary);
+  box-shadow:0 2px 4px rgba(0,0,0,0.8);
+}
+.ring .rope.top{top:20px;}
+.ring .rope.mid{top:50%; transform:translateY(-50%);}
+.ring .rope.bottom{bottom:20px;}
+.ring .corner{
+  position:absolute;
+  width:12px;
+  height:12px;
+  background:var(--accent);
+  border-radius:50%;
+}
+.ring .corner.tl{top:0; left:0;}
+.ring .corner.tr{top:0; right:0;}
+.ring .corner.bl{bottom:0; left:0;}
+.ring .corner.br{bottom:0; right:0;}
 
-    html,body{
-      height:100%;
-      margin:0;
-      background: var(--bg) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><text x="0" y="20" font-size="20" fill="rgba(255,255,255,0.05)">💥🏆⚡</text></svg>') repeat;
-      color:white;
-      font-family:'Anton', sans-serif;
-      scroll-behavior: smooth;
-      padding-top:60px; /* space for top music bar */
-    }
+/* Belt */
+.beltWrap{
+  margin:20px auto;
+  display:flex;
+  gap:30px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.beltImg{
+  width:300px;
+  border:4px solid #222;
+  border-radius:8px;
+  background:linear-gradient(90deg,#222,#111);
+  padding:6px;
+}
+.beltName{
+  background:var(--accent);
+  color:#111;
+  padding:6px 12px;
+  border-radius:6px;
+  font-weight:900;
+  margin-top:8px;
+}
 
-    /* Top Music Bar */
-    .topMusicBar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: #111;
-      color: var(--gold);
-      padding: 10px 0;
-      text-align: center;
-      z-index: 1000;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.8);
-    }
+/* Slideshow */
+.slideshow{
+  width:300px;
+  height:300px;
+  margin:20px auto;
+  border-radius:12px;
+  border:4px solid #222;
+  overflow:hidden;
+  position:relative;
+}
+.slideshow img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  position:absolute;
+  top:0;
+  left:0;
+  opacity:0;
+  transition:opacity 1s;
+}
+.slideshow img.active{opacity:1;}
 
-    .topMusicBar button {
-      background: var(--gold);
-      color: #111;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-weight: 900;
-      cursor: pointer;
-      margin: 0 6px;
-    }
+/* Superstar Wishes */
+.wishesWrap{
+  margin-top:30px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:16px;
+}
+.wishCard{
+  background:linear-gradient(180deg,#111,#0b0b0b);
+  padding:16px;
+  border-radius:10px;
+  box-shadow:0 6px 16px rgba(0,0,0,0.7);
+  text-align:left;
+}
+.starName{
+  font-weight:900;
+  color:var(--accent);
+  font-size:1rem;
+}
+.wishText{
+  margin-top:8px;
+  color:var(--muted);
+  font-size:0.95rem;
+  line-height:1.3;
+}
 
-    .container{
-      max-width:1100px;
-      margin:24px auto;
-      padding:16px;
-      text-align:center;
-    }
+/* Add wish */
+.addWish{
+  margin:20px auto;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.addWish input,.addWish textarea{
+  padding:8px;
+  border-radius:6px;
+  border:2px solid #222;
+  background:#0e0e0e;
+  color:#fff;
+  min-width:200px;
+}
+.addWish button{
+  background:var(--accent);
+  color:#111;
+  border:none;
+  padding:10px 14px;
+  border-radius:6px;
+  font-weight:900;
+  cursor:pointer;
+}
 
-    h1{
-      font-size:3rem;
-      color:var(--gold);
-      text-shadow:0 4px 8px rgba(0,0,0,0.7);
-      animation:shake 0.6s infinite;
-    }
+/* Confetti canvas */
+canvas.confetti{
+  position:fixed;
+  left:0; top:0;
+  width:100%; height:100%;
+  pointer-events:none;
+  z-index:9999;
+}
 
-    h2{
-      font-size:1.6rem;
-      margin:6px 0;
-      color:var(--muted);
-      font-weight:700;
-    }
+/* Background WWE Icons */
+body::before{
+  content:"⚡🏆🥊";
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  font-size:40px;
+  opacity:0.03;
+  pointer-events:none;
+  display:flex;
+  flex-wrap:wrap;
+  align-content:space-around;
+  justify-content:space-around;
+}
 
-    @keyframes shake{
-      0%{transform:translate(0,0)}
-      25%{transform:translate(2px,-2px) rotate(-1deg)}
-      50%{transform:translate(-2px,2px) rotate(1deg)}
-      75%{transform:translate(1px,-1px) rotate(-1deg)}
-      100%{transform:translate(0,0)}
-    }
-
-    /* Countdown */
-    #countdown{font-size:1.8rem;color:var(--gold);margin:14px 0;font-weight:900;letter-spacing:1px}
-
-    /* Ring */
-    .ring{margin:20px auto;border:6px solid white;width:360px;height:220px;position:relative;border-radius:6px;background:linear-gradient(180deg,#080808,#111);}
-    .rope{position:absolute;width:100%;height:8px;background:var(--accent);box-shadow:0 2px 6px rgba(0,0,0,0.8)}
-    .top{top:26px}
-    .mid{top:104px}
-    .bottom{bottom:26px}
-
-    /* Belt */
-    .beltWrap{margin:18px auto;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
-    .beltImg{width:300px;border:6px solid #222;border-radius:8px;background:linear-gradient(90deg,#222,#111);padding:6px}
-    .beltName{display:inline-block;background:var(--gold);color:#111;padding:6px 12px;border-radius:6px;font-weight:900;margin-top:8px}
-
-    /* slideshow */
-    .slideshow{width:300px;height:300px;margin:14px auto;overflow:hidden;border-radius:12px;border:5px solid #222;position:relative;background:#111}
-    .slideshow img{position:absolute;width:100%;height:100%;object-fit:cover;left:0;top:0;opacity:0;transition:opacity 1s}
-    .slideshow img.active{opacity:1}
-
-    /* Wishes area */
-    .wishesWrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin:18px 0}
-    .wishCard{background:linear-gradient(180deg,#111,#0b0b0b);border:3px solid rgba(200,200,200,0.06);padding:12px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.7);text-align:center}
-    .starName{font-weight:900;color:var(--accent);font-size:1rem;margin-bottom:6px;display:block}
-    .wishText{font-size:0.95rem;color:var(--muted);line-height:1.3}
-
-    /* Add wish form */
-    .addWish{margin:16px auto;display:flex;gap:8px;max-width:700px;align-items:center;justify-content:center;flex-wrap:wrap}
-    .addWish input,.addWish textarea{padding:8px;border-radius:6px;border:2px solid #222;background:#0e0e0e;color:#fff;min-width:200px}
-    .addWish button{background:var(--gold);color:#111;border:none;padding:10px 14px;border-radius:6px;font-weight:900;cursor:pointer}
-
-    /* Confetti canvas sits above fireworks */
-    canvas.confetti{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:9999}
-
-    /* responsive */
-    @media(max-width:520px){
-      h1{font-size:2rem}
-      .ring{width:260px;height:160px}
-      .slideshow{width:260px;height:260px}
-    }
-  </style>
+/* Responsive */
+@media(max-width:520px){
+  h1{font-size:2rem;}
+  .ring{width:260px;height:160px;}
+  .slideshow{width:260px;height:260px;}
+}
+</style>
 </head>
 <body>
 
-  <!-- Top Music Control -->
-  <div class="topMusicBar">
-    <audio id="themeAudio" loop>
-      <source src="theme.mp3" type="audio/mpeg">
-      Your browser doesn't support audio.
-    </audio>
-    <button id="playBtnTop">▶️ Play Music</button>
-    <button id="pauseBtnTop" style="display:none">⏸️ Pause Music</button>
+<div class="audioBar">
+  <audio id="themeAudio" loop>
+    <source src="theme.mp3" type="audio/mpeg">
+    Your browser doesn't support audio.
+  </audio>
+  <button id="playBtn">▶️ Play Music</button>
+  <button id="pauseBtn" style="display:none">⏸️ Pause Music</button>
+</div>
+
+<div class="container">
+  <h1>🎂 Happy Birthday, Arvind! 🎂</h1>
+  <h2>The Undisputed WWE Champion</h2>
+
+  <div class="ring">
+    <div class="rope top"></div>
+    <div class="rope mid"></div>
+    <div class="rope bottom"></div>
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
   </div>
 
-  <div class="container">
-    <h1>🎂 Happy Birthday, Arvind! 🎂</h1>
-    <h2>The Undisputed WWE Champion — Get Ready to RUMBLE</h2>
-
-    <!-- countdown -->
-    <div id="countdown">Loading countdown...</div>
-
-    <!-- ring -->
-    <div class="ring" aria-hidden="true">
-      <div class="rope top"></div>
-      <div class="rope mid"></div>
-      <div class="rope bottom"></div>
+  <div class="beltWrap">
+    <div>
+      <h2>🏆 Birthday Championship Belt</h2>
+      <div class="beltImg">
+        <img src="belt.png" alt="Belt" style="width:100%;height:auto;border-radius:6px">
+      </div>
+      <div class="beltName">ARVIND</div>
     </div>
 
-    <!-- belt + slideshow -->
-    <div class="beltWrap">
-      <div>
-        <h2 style="margin:8px 0">🏆 Birthday Championship Belt</h2>
-        <div class="beltImg">
-          <img src="belt.png" alt="Belt placeholder" style="width:100%;height:auto;display:block;border-radius:6px">
-        </div>
-        <div class="beltName">ARVIND</div>
+    <div>
+      <h2>📸 Titantron Photos</h2>
+      <div class="slideshow" id="slideshow">
+        <img src="arvind1.jpg" class="active" alt="Arvind photo 1">
+        <img src="arvind2.jpg" alt="Arvind photo 2">
+        <img src="arvind3.jpg" alt="Arvind photo 3">
       </div>
-
-      <div>
-        <h2 style="margin:8px 0">📸 The Titantron (Photos)</h2>
-        <div class="slideshow" id="slideshow">
-          <img src="arvind1.jpg" class="active" alt="Arvind photo 1">
-          <img src="arvind2.jpg" alt="Arvind photo 2">
-          <img src="arvind3.jpg" alt="Arvind photo 3">
-        </div>
-      </div>
-    </div>
-
-    <!-- Superstar Wishes -->
-    <h2 style="margin-top:22px">🎙️ Superstar Wishes</h2>
-    <div class="wishesWrap" id="wishesWrap">
-      <div class="wishCard">
-        <div class="starName">The Rock</div>
-        <div class="wishText">"Finally... Arvind! The People have spoken — have yourself a smackdown of a birthday. Lay the smackethdown and enjoy!"</div>
-      </div>
-      <div class="wishCard">
-        <div class="starName">John Cena</div>
-        <div class="wishText">"Arvind, champ — hustle hard today, celebrate harder. You can't see me, but you can hear the cheers!"</div>
-      </div>
-      <div class="wishCard">
-        <div class="starName">The Undertaker</div>
-        <div class="wishText">"Rest... and then party. A dark and glorious birthday to you, Arvind. The ring remembers."</div>
-      </div>
-      <div class="wishCard">
-        <div class="starName">Stone Cold</div>
-        <div class="wishText">"Give me a hell yeah! Arvind — crack open a cold one and enjoy your day, son!"</div>
-      </div>
-      <div class="wishCard">
-        <div class="starName">Roman Reigns</div>
-        <div class="wishText">"Happy birthday, family. Wishing you strength, pride and a year of victories. Drive forward."</div>
-      </div>
-    </div>
-
-    <!-- Add wish form -->
-    <div style="margin-top:8px">
-      <h2 style="margin:8px 0">✍️ Add a Friend's Wish</h2>
-      <div class="addWish">
-        <input id="friendName" placeholder="Your name (friend)" />
-        <textarea id="friendWish" rows="2" placeholder="Your wish for Arvind"></textarea>
-        <button id="addWishBtn">Add Wish</button>
-      </div>
-      <small style="color:#999">(These will appear as quote cards above)</small>
     </div>
   </div>
 
-  <!-- fireworks + confetti canvas -->
-  <canvas id="fireworksCanvas" class="confetti"></canvas>
+  <h2>🎙️ Superstar Wishes</h2>
+  <div class="wishesWrap" id="wishesWrap">
+    <div class="wishCard">
+      <div class="starName">The Rock</div>
+      <div class="wishText">Finally... Arvind! The People have spoken — have yourself a smackdown of a birthday!</div>
+    </div>
+    <div class="wishCard">
+      <div class="starName">John Cena</div>
+      <div class="wishText">Arvind, champ — hustle hard today, celebrate harder!</div>
+    </div>
+    <div class="wishCard">
+      <div class="starName">Stone Cold</div>
+      <div class="wishText">Give me a hell yeah! Enjoy your day!</div>
+    </div>
+  </div>
 
-  <script>
-    /* ---------- Config ---------- */
-    const birthdayTarget = new Date('2025-09-20T00:00:00');
+  <div>
+    <h2>✍️ Add a Friend's Wish</h2>
+    <div class="addWish">
+      <input id="friendName" placeholder="Your name" />
+      <textarea id="friendWish" rows="2" placeholder="Your wish"></textarea>
+      <button id="addWishBtn">Add Wish</button>
+    </div>
+  </div>
+</div>
 
-    /* ---------- Countdown ---------- */
-    const countdownEl = document.getElementById('countdown');
-    const targetTime = birthdayTarget.getTime();
+<canvas id="fireworksCanvas" class="confetti"></canvas>
 
-    function computeBirthdayAge(birth) {
-      const bd = new Date(birth);
-      let age = birthdayTarget.getFullYear() - bd.getFullYear();
-      const m = birthdayTarget.getMonth() - bd.getMonth();
-      if (m < 0 || (m === 0 && birthdayTarget.getDate() < bd.getDate())) age--;
-      return age;
-    }
-    const ageAtBirthday = computeBirthdayAge('1987-09-20');
+<script>
+// Music controls
+const audio = document.getElementById('themeAudio');
+const playBtn = document.getElementById('playBtn');
+const pauseBtn = document.getElementById('pauseBtn');
+playBtn.addEventListener('click', ()=>{
+  audio.play().catch(()=>{});
+  playBtn.style.display='none'; pauseBtn.style.display='inline-block';
+});
+pauseBtn.addEventListener('click', ()=>{
+  audio.pause();
+  pauseBtn.style.display='none'; playBtn.style.display='inline-block';
+});
 
-    function updateCountdown() {
-      const now = Date.now();
-      const dist = targetTime - now;
-      if (dist <= 0) {
-        countdownEl.innerHTML = `🎉 The Champion Arrives! Happy ${ageAtBirthday}<sup>th</sup> Birthday, Arvind! 🎉`;
-        triggerCelebration();
-        return;
-      }
-      const days = Math.floor(dist / (1000*60*60*24));
-      const hours = Math.floor((dist % (1000*60*60*24)) / (1000*60*60));
-      const minutes = Math.floor((dist % (1000*60*60)) / (1000*60));
-      const seconds = Math.floor((dist % (1000*60)) / 1000);
-      countdownEl.innerHTML = `${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
-    }
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+// Slideshow
+const slides = document.querySelectorAll('.slideshow img');
+let si=0;
+setInterval(()=>{
+  slides[si].classList.remove('active');
+  si=(si+1)%slides.length;
+  slides[si].classList.add('active');
+},3000);
 
-    /* ---------- Slideshow ---------- */
-    const slides = document.querySelectorAll('.slideshow img');
-    let si = 0;
-    setInterval(()=>{
-      slides[si].classList.remove('active');
-      si = (si + 1) % slides.length;
-      slides[si].classList.add('active');
-    }, 3000);
+// Add wish
+const wishesWrap = document.getElementById('wishesWrap');
+document.getElementById('addWishBtn').addEventListener('click', ()=>{
+  const name=document.getElementById('friendName').value.trim()||'Friend';
+  const text=document.getElementById('friendWish').value.trim();
+  if(!text) return alert('Please write a wish!');
+  const card=document.createElement('div'); card.className='wishCard';
+  card.innerHTML=`<div class="starName">${name}</div><div class="wishText">${text}</div>`;
+  wishesWrap.prepend(card);
+  document.getElementById('friendName').value='';
+  document.getElementById('friendWish').value='';
+});
 
-    /* ---------- Music Top Controls ---------- */
-    const audioTop = document.getElementById('themeAudio');
-    const playBtnTop = document.getElementById('playBtnTop');
-    const pauseBtnTop = document.getElementById('pauseBtnTop');
-
-    playBtnTop.addEventListener('click', ()=>{
-      audioTop.play().catch(()=>{});
-      playBtnTop.style.display='none';
-      pauseBtnTop.style.display='inline-block';
+// Fireworks confetti
+const canvas=document.getElementById('fireworksCanvas');
+const ctx=canvas.getContext('2d');
+function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+window.addEventListener('resize',resizeCanvas);
+resizeCanvas();
+const particles=[];
+function spawnConfetti(){
+  for(let i=0;i<60;i++){
+    particles.push({
+      x:Math.random()*canvas.width,
+      y:-10,
+      vx:(Math.random()-0.5)*2,
+      vy:Math.random()*3+1,
+      life:Math.random()*200+100,
+      color:`hsl(${Math.random()*360} 80% 50%)`,
+      size:Math.random()*6+4,
+      gravity:0.05
     });
-    pauseBtnTop.addEventListener('click', ()=>{
-      audioTop.pause();
-      pauseBtnTop.style.display='none';
-      playBtnTop.style.display='inline-block';
-    });
+  }
+}
+function animateParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(let i=particles.length-1;i>=0;i--){
+    const p=particles[i];
+    p.vy+=p.gravity;
+    p.x+=p.vx; p.y+=p.vy;
+    p.life--;
+    ctx.fillStyle=p.color;
+    ctx.beginPath();
+    ctx.ellipse(p.x,p.y,p.size,p.size*0.8,0,0,Math.PI*2);
+    ctx.fill();
+    if(p.life<=0||p.y>canvas.height+50) particles.splice(i,1);
+  }
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+setInterval(spawnConfetti,3000);
+</script>
 
-    /* ---------- Wishes add (client-side) ---------- */
-    const wishesWrap = document.getElementById('wishesWrap');
-    const addBtn = document.getElementById('addWishBtn');
-    addBtn.addEventListener('click', ()=>{
-      const name = document.getElementById('friendName').value.trim() || 'Friend';
-      const text = document.getElementById('friendWish').value.trim();
-      if(!text) return alert('Please write a wish!');
-      const card = document.createElement('div'); card.className='wishCard';
-      card.innerHTML = `
-        <div class="starName">${escapeHtml(name)}</div>
-        <div class="wishText">${escapeHtml(text)}</div>
-      `;
-      wishesWrap.prepend(card);
-      document.getElementById('friendName').value=''; 
-      document.getElementById('friendWish').value='';
-    });
-
-    function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
-
-    /* ---------- Fireworks + Confetti ---------- */
-    const canvas = document.getElementById('fireworksCanvas');
-    const ctx = canvas.getContext('2d');
-    function resizeCanvas(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    const particles = [];
-    function spawnFirework(x,y){
-      const hue = Math.floor(Math.random()*360);
-      for(let i=0;i<80;i++){
-        particles.push({x,y,vx:(Math.random()-0.5)*6,vy:(Math.random()-0.5)*6,life:Math.random()*60+40,color:`hsl(${hue} 100% 50%)`,size:Math.random()*3+1,gravity:0.04});
-      }
-    }
-    function spawnConfetti(){
-      for(let i=0;i<60;i++){
-        particles.push({x:Math.random()*canvas.width,y:-10,vx:(Math.random()-0.5)*2,vy:Math.random()*3+1,life:Math.random()*200+100,color:`hsl(${Math.random()*360} 80% 50%)`,size:Math.random()*6+4,gravity:0.05});
-      }
-    }
-
-    function animateParticles(){
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      for(let i=particles.length-1;i>=0;i--){
-        const p = particles[i];
-        p.vy += p.gravity;
-        p.x += p.vx;
-        p.y += p.vy;
-        p.life--;
-        ctx.fillStyle = p.color;
-        ctx.beginPath();
-        ctx.ellipse(p.x,p.y,p.size,p.size*0.8,0,0,Math.PI*2);
-        ctx.fill();
-        if(p.life<=0 || p.y>canvas.height+50) particles.splice(i,1);
-      }
-      requestAnimationFrame(animateParticles);
-    }
-    animateParticles();
-
-    setInterval(()=>{
-      if(Math.random() < 0.06){
-        spawnFirework(Math.random()*canvas.width, Math.random()*canvas.height*0.5);
-      }
-    }, 700);
-
-    let celebrated=false;
-    function triggerCelebration(){
-      if(celebrated) return;
-      celebrated=true;
-      for(let i=0;i<6;i++){
-        setTimeout(()=> spawnFirework(canvas.width*(0.15 + Math.random()*0.7), canvas.height*0.2 + Math.random()*80), i*300);
-      }
-      spawnConfetti();
-      audioTop.play().catch(()=>{});
-      let cnt = 0;
-      const fwInt = setInterval(()=>{
-        spawnFirework(Math.random()*canvas.width, Math.random()*canvas.height*0.35);
-        cnt++;
-        if(cnt>16){ clearInterval(fwInt); }
-      },250);
-    }
-
-    if(Date.now() >= targetTime) triggerCelebration();
-  </script>
 </body>
 </html>
