@@ -14,7 +14,7 @@
   html, body{
     margin:0;
     height:100%;
-    background:#000 url('https://i.ibb.co/3cZ7YcK/wwe-bg.png') repeat;
+    background:#000 url('wwe-bg.png') repeat;
     font-family:'Arial Black', 'Impact', sans-serif;
     color:white;
     overflow-x:hidden;
@@ -284,16 +284,43 @@ function triggerCelebration(){
   for(let i=0;i<6;i++){ setTimeout(()=>spawnFirework(canvas.width*(0.15+Math.random()*0.7),canvas.height*0.2+Math.random()*80),i*300); }
 }
 
-/* ---------- Avatars Pop-in ---------- */
-const avatars=['R','C','U','S','B','HH']; // WWE stars initials
-const avatarPop=document.getElementById('avatarPop');
-setInterval(()=>{
-  const letter=avatars[Math.floor(Math.random()*avatars.length)];
-  avatarPop.textContent=letter;
-  avatarPop.style.transform='translateX(-50%) scale(1)';
-  avatarPop.style.opacity='1';
-  setTimeout(()=>{ avatarPop.style.transform='translateX(-50%) scale(0)'; avatarPop.style.opacity='0'; },2500);
-},15000);
+/* ---------- Avatars Pop-in with PNGs ---------- */
+const avatarImages = [
+  'romanReigns.png',
+  'rock.png',
+  'undertaker.png',
+  'johnCena.png'
+];
+
+const avatarPop = document.getElementById('avatarPop');
+
+setInterval(() => {
+  // Pick a random avatar
+  const imgSrc = avatarImages[Math.floor(Math.random() * avatarImages.length)];
+
+  // Clear previous content
+  avatarPop.innerHTML = '';
+
+  // Create img element
+  const img = document.createElement('img');
+  img.src = imgSrc;
+  img.style.width = '80px';
+  img.style.height = '80px';
+  img.style.borderRadius = '50%';
+  img.style.objectFit = 'cover';
+
+  avatarPop.appendChild(img);
+
+  // Animate pop-in
+  avatarPop.style.transform = 'translateX(-50%) scale(1)';
+  avatarPop.style.opacity = '1';
+
+  setTimeout(() => {
+    avatarPop.style.transform = 'translateX(-50%) scale(0)';
+    avatarPop.style.opacity = '0';
+  }, 2500);
+}, 15000);
+
 
 /* ---------- Interactive Slam / Punch ---------- */
 function screenShake(){
